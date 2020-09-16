@@ -1,6 +1,5 @@
 package alura.com.br.ui.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -11,7 +10,6 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
+import alura.com.br.ui.ListaAlunosView;
 import alura.com.br.ui.adapter.ListaAlunosAdapter;
 
 import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
@@ -26,8 +25,7 @@ import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 public class ListaAlunosActivity extends AppCompatActivity {
 
     public static final String TITULO_APPBAR = "Lista de Alunos";
-    private final AlunoDAO dao = new AlunoDAO();
-    private ListaAlunosAdapter adapter;
+    private ListaAlunosView listaAlunosView = new ListaAlunosView(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,31 +47,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int itemMenuId = item.getItemId();
         if (itemMenuId == R.id.itemMenuRemover) {
-            confirmaRemocaoDoAluno(item);
+            listaAlunosView.confirmaRemocaoDoAluno(item);
 
         }
         return super.onContextItemSelected(item);
-    }
-
-    private void confirmaRemocaoDoAluno(@NonNull final MenuItem item) {
-        new AlertDialog.Builder(this)
-                .setTitle("Remover Aluno")
-                .setMessage("Deseja Remover o aluno?")
-                .setNegativeButton("Não", null)
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        removeAluno(item);
-                    }
-                })
-                .show();
-    }
-
-    private void removeAluno(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo menuInfo =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-        remove(alunoEscolhido);
     }
 
     private void configuraFabNovoAluno() {
@@ -93,24 +70,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        atualizaAluno();
-    }
-
-    private void atualizaAluno() {
-        adapter.atualiza(dao.todos());
+        listaAlunosView.atualizaAluno();
     }
 
     private void configuraLista() {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        configuraAdapter(listaDeAlunos);
+        listaAlunosView.configuraAdapter(listaDeAlunos);
         configuraListenerPorItem(listaDeAlunos);
         registerForContextMenu(listaDeAlunos);
     }
 
-    private void remove(Aluno aluno) {
-        dao.remover(aluno);
-        adapter.remove(aluno);
-    }
+
 
     private void configuraListenerPorItem(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,10 +96,5 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
         vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
         startActivity(vaiParaFormularioActivity);
-    }
-
-    private void configuraAdapter(ListView listaDeAlunos) {
-        adapter = new ListaAlunosAdapter(this);
-        listaDeAlunos.setAdapter(adapter);
     }
 }
