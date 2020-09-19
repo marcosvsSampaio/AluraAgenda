@@ -9,8 +9,9 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import alura.com.br.DAO.AlunoDAO;
-import alura.com.br.model.Aluno;
+import alura.com.br.database.AgendaDatabase;
+import alura.com.br.database.dao.AlunoDAO;
+import alura.com.br.entity.Aluno;
 import alura.com.br.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunosView {
@@ -22,7 +23,7 @@ public class ListaAlunosView {
     public ListaAlunosView(Context context) {
         this.context = context;
         this.adapter = new ListaAlunosAdapter(context);
-        this.dao = new AlunoDAO();
+        dao = AgendaDatabase.getInstance(context).getRoomAlunoDao();
     }
 
     public void confirmaRemocaoDoAluno(@NonNull final MenuItem item) {

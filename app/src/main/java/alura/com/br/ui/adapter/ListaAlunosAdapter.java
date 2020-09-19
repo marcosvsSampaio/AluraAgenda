@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alura.com.br.R;
-import alura.com.br.model.Aluno;
+import alura.com.br.entity.Aluno;
 
 public class ListaAlunosAdapter extends BaseAdapter {
     private final List<Aluno> alunos = new ArrayList<>();

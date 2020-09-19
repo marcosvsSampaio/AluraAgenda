@@ -14,18 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
-import alura.com.br.model.Aluno;
+import alura.com.br.entity.Aluno;
 import alura.com.br.ui.ListaAlunosView;
-import alura.com.br.ui.adapter.ListaAlunosAdapter;
 
 import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
     public static final String TITULO_APPBAR = "Lista de Alunos";
-    private ListaAlunosView listaAlunosView = new ListaAlunosView(this);
+    private ListaAlunosView listaAlunosView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,8 +31,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
+        listaAlunosView = new ListaAlunosView(this);
         configuraLista();
-
     }
 
     @Override

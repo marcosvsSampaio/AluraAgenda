@@ -3,7 +3,7 @@ package alura.com.br.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import alura.com.br.model.Aluno;
+import alura.com.br.entity.Aluno;
 
 public class AlunoDAO {
     private final static List<Aluno> alunos = new ArrayList<>();

@@ -10,9 +10,10 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
-import alura.com.br.model.Aluno;
+import alura.com.br.database.AgendaDatabase;
+import alura.com.br.database.dao.AlunoDAO;
+import alura.com.br.entity.Aluno;
 
 import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
@@ -23,14 +24,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
-    private final AlunoDAO dao = new AlunoDAO();
+    private AlunoDAO dao;
     private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-
+        dao = AgendaDatabase.getInstance(this).getRoomAlunoDao();
         inicializacaoDosCampos();
         carregaAluno();
     }

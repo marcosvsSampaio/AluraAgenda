@@ -1,11 +1,16 @@
-package alura.com.br.model;
+package alura.com.br.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity
 public class Aluno implements Serializable {
-    private int id = 0;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nome;
     private String telefone;
     private String email;
@@ -16,6 +21,7 @@ public class Aluno implements Serializable {
         this.email = email;
     }
 
+    @Ignore
     public Aluno(){
 
     }
