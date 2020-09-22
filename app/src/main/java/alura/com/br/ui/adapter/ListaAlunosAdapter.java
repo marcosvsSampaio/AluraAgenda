@@ -48,7 +48,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     private void vincula(View view, Aluno aluno) {
         TextView nomeAluno = view.findViewById(R.id.nomeAluno);
-        nomeAluno.setText(aluno.getNome());
+        nomeAluno.setText(aluno.getNome() + " " + aluno.getDataFormatada());
         TextView telefoneAluno = view.findViewById(R.id.telefoneAluno);
         telefoneAluno.setText(aluno.getTelefone());
     }

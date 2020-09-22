@@ -6,6 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Entity
 public class Aluno implements Serializable {
@@ -14,6 +16,7 @@ public class Aluno implements Serializable {
     private String nome;
     private String telefone;
     private String email;
+    private Calendar criadoEm = Calendar.getInstance();
 
     public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
@@ -50,6 +53,14 @@ public class Aluno implements Serializable {
         return email;
     }
 
+    public Calendar getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(Calendar criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -66,5 +77,10 @@ public class Aluno implements Serializable {
 
     public boolean temIdValido() {
         return id > 0;
+    }
+
+    public String getDataFormatada() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(getCriadoEm().getTime());
     }
 }
