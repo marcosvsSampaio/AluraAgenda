@@ -11,14 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alura.com.br.R;
+import alura.com.br.aynctask.BuscaPrimeiroTelefoneDoAlunoTask;
+import alura.com.br.database.AgendaDatabase;
+import alura.com.br.database.dao.TelefoneDAO;
 import alura.com.br.entity.Aluno;
 
 public class ListaAlunosAdapter extends BaseAdapter {
     private final List<Aluno> alunos = new ArrayList<>();
     private final Context context;
+    private final TelefoneDAO dao;
 
     public ListaAlunosAdapter(Context context) {
         this.context = context;
+        dao = AgendaDatabase.getInstance(context).getTelefoneDAO();
     }
 
     @Override
@@ -48,9 +53,11 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     private void vincula(View view, Aluno aluno) {
         TextView nomeAluno = view.findViewById(R.id.nomeAluno);
-        nomeAluno.setText(aluno.getNome() + " " + aluno.getDataFormatada());
-        TextView telefoneAluno = view.findViewById(R.id.telefoneAluno);
-        telefoneAluno.setText(aluno.getTelefone());
+        nomeAluno.setText(aluno.getNome());
+        final TextView telefoneAluno = view.findViewById(R.id.telefoneAluno);
+        new BuscaPrimeiroTelefoneDoAlunoTask(dao, aluno.getId(), telefoneEncontrado ->
+            telefoneAluno.setText(telefoneEncontrado.getNumero())
+        ).execute();
     }
 
     private View criaView(ViewGroup parent) {

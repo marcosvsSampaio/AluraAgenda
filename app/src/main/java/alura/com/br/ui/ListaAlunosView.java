@@ -9,6 +9,8 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import alura.com.br.aynctask.BuscaAlunosTask;
+import alura.com.br.aynctask.RemoveAlunoTask;
 import alura.com.br.database.AgendaDatabase;
 import alura.com.br.database.dao.AlunoDAO;
 import alura.com.br.entity.Aluno;
@@ -48,12 +50,11 @@ public class ListaAlunosView {
     }
 
     public void atualizaAluno() {
-        adapter.atualiza(dao.todos());
+        new BuscaAlunosTask(adapter, dao).execute();
     }
 
     public void remove(Aluno aluno) {
-        dao.remover(aluno);
-        adapter.remove(aluno);
+        new RemoveAlunoTask(adapter, dao, aluno).execute();
     }
 
     public void configuraAdapter(ListView listaDeAlunos) {

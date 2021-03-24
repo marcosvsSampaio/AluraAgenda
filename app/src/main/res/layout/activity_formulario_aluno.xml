@@ -19,11 +19,21 @@
             android:autofillHints=""
             android:importantForAutofill="no" />
 
-        <EditText android:id="@+id/activity_formulario_aluno_telefone"
+        <EditText android:id="@+id/activity_formulario_aluno_telefone_fixo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:hint="@string/string_telefoneAluno"
+            android:hint="@string/string_telefone_fixo"
+            android:inputType="phone"
+            tools:ignore="HardcodedText"
+            android:autofillHints=""
+            android:importantForAutofill="no" />
+
+        <EditText android:id="@+id/activity_formulario_aluno_telefone_celular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/string_telefone_celular"
             android:inputType="phone"
             tools:ignore="HardcodedText"
             android:autofillHints=""
